@@ -1,0 +1,37 @@
+﻿@using System.ComponentModel.DataAnnotations;
+@using MongoDB.Bson;
+@using MongoDB.Driver;
+
+@page "/"
+
+<p>
+    Enter your ZIP Code: <input type="text" bind="@zipcode" maxlength="5" size="5" /><br />
+
+    Select the recycle code: 
+    <select id="select-box" bind="@recycleCode">
+        <option value="1">1 - PETE</option>
+        <option value="2">2 - HDPE</option>
+        <option value="3">3 - PVC</option>
+        <option value="4">4 - LDPE</option>
+        <option value="5">5 - PP</option>
+        <option value="6">6 - PS</option>
+        <option value="7">7 - Other</option>
+    </select>
+    <br />
+    <br />
+    <button class="btn btn-primary" @onclick="clickEvent">Is It Recyclable?</button>&nbsp;&nbsp;&nbsp;
+    <label id="output" style="color:red;font-size:24px;font-weight:bold">@result</label>
+</p>
+
+
+@code {
+    public string zipcode { get; set; } = "20007";
+    public string recycleCode { get; set; } = "1";
+    public string result { get; set; } = "";
+
+    private void clickEvent()
+    {
+        var mongoUrl = new MongoUrl("mongodb://js:hoyahackathon@cluster0-shard-00-00-yieuo.mongodb.net:27017,cluster0-shard-00-01-yieuo.mongodb.net:27017,cluster0-shard-00-02-yieuo.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
+        var client = new MongoClient(mongoUrl);
+    }
+}
